@@ -85,7 +85,8 @@ sequence:
 - service: scene.create
   data:
     scene_id: all_lights_snapshot
-    snapshot_entities:> {% (states.light|selectattr('state','eq','on')|rejectattr('attributes.hue_type', 'in', ['room', 'zone'])|map(attribute='entity_id')|list+['light.dummy'])|join(',') %}
+    snapshot_entities:> 
+      {{ (states.light|selectattr('state','eq','on')|rejectattr('attributes.hue_type', 'in', ['room', 'zone'])|map(attribute='entity_id')|list+['light.dummy'])|join(',') }}
 - service: light.turn_on
   target: !input 'target_lights'
   data:
